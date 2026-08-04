@@ -1,2 +1,247 @@
+# =============================================================================
+# Global .gitignore — SplendidCube workspace
+# -----------------------------------------------------------------------------
+# Source of truth: the `common-files` repo. `dev-env` syncs this file into every
+# project root and refreshes it on each update, so DO NOT edit it inside a
+# project — change it here in `common-files` instead.
+#
+# For ignores that are specific to one project and should NOT be shared, use
+# `.git/info/exclude` (untracked, local to that clone) rather than editing the
+# synced copy.
+#
+# Covers: macOS / Windows / Linux, editors & IDEs, Rust, Node/Bun/Nuxt 4/Vue 3,
+# TypeScript, Swift/Xcode (native macOS desktop apps), JVM/Gradle plugins, Python
+# tooling, secrets, logs & temp files.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Operating system
+# -----------------------------------------------------------------------------
+# macOS
 .DS_Store
-.claude/
+.DS_Store?
+._*
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+.fseventsd
+.DocumentRevisions-V100
+.TemporaryItems
+.VolumeIcon.icns
+Icon?
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# -----------------------------------------------------------------------------
+# Editors & IDEs
+# -----------------------------------------------------------------------------
+# JetBrains (local IDE state; shared run configs are managed separately)
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# VS Code (shared settings are synced via common-files; drop only local noise)
+.history/
+*.code-workspace
+.vscode/*.local
+
+# Vim / Emacs / misc backups
+*.swp
+*.swo
+*.swn
+.\#*
+\#*\#
+*.bak
+*.orig
+
+# -----------------------------------------------------------------------------
+# Rust  (apps, CLIs, AWS Lambda, models, postgres-engine, core)
+# -----------------------------------------------------------------------------
+target/
+**/*.rs.bk
+*.pdb
+# NOTE: Cargo.lock is intentionally NOT ignored — most repos here are
+# binaries / Lambdas, which commit their lockfile for reproducible builds.
+
+# -----------------------------------------------------------------------------
+# Node / Bun / Nuxt 4 / Vue 3  (web, weblib, i18n)
+# -----------------------------------------------------------------------------
+node_modules/
+.nuxt/
+.output/
+.nitro/
+.data/
+# No trailing slash: some web repos expose `dist` as a symlink to the Nuxt
+# static output (`dist -> .output/public`) for hosts that publish from `dist/`.
+# `dist/` would only match a real directory and let that symlink slip through.
+dist
+.cache/
+.vite/
+.temp/
+*.tsbuildinfo
+coverage/
+.eslintcache
+.stylelintcache
+# NOTE: bun.lockb is intentionally NOT ignored — commit it for reproducible installs.
+
+# Playwright E2E (saved auth state, reports, failure artefacts)
+/e2e/.auth/
+/test-results/
+/playwright-report/
+/blob-report/
+
+# -----------------------------------------------------------------------------
+# Swift / Xcode / SwiftPM  (native macOS desktop apps — macos-desktop-app)
+# -----------------------------------------------------------------------------
+.build/
+DerivedData/
+.build-xcode/
+.swiftpm/
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+*.xcodeproj/
+*.generated.plist
+*.generated.entitlements
+# Vendored-C build scratch: build-libgit2.sh (and any sibling vendor builds) stage
+# sources, build trees, and install roots here — hundreds of MB; only the finished
+# .xcframework under Vendor/ is committed.
+.libgit2-build/
+# Test-result / archive / symbol bundles and coverage droppings from xcodebuild and
+# `swift test` runs that land outside the ignored derived-data dirs.
+*.xcresult/
+*.xcarchive/
+*.dSYM/
+*.profraw
+*.profdata
+# NOTE: Package.resolved is intentionally NOT ignored — commit it for reproducible
+# dependency resolution (like Cargo.lock / bun.lockb above).
+
+# -----------------------------------------------------------------------------
+# JVM / Gradle  (JetBrains plugin archetype)
+# -----------------------------------------------------------------------------
+.gradle/
+build/
+out/
+
+# -----------------------------------------------------------------------------
+# Python  (bootstrap / tooling scripts)
+# -----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# -----------------------------------------------------------------------------
+# Environment & secrets
+# -----------------------------------------------------------------------------
+.env
+.env.*
+*.local
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.keystore
+
+# -----------------------------------------------------------------------------
+# Logs & temporary files
+# -----------------------------------------------------------------------------
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+bun-debug.log*
+*.tmp
+*.temp
+tmp/
+
+# -----------------------------------------------------------------------------
+# Local script cache  (managed by the shared makefile)
+# -----------------------------------------------------------------------------
+# `run-script` (in ~/.splendidcube/makefile.mk) downloads makefile scripts into
+# scripts/<technology>/ on demand. The folder is kept (.gitkeep) but everything
+# downloaded into it is transient — never commit it.
+/scripts/*
+!/scripts/.gitkeep
+
+# -----------------------------------------------------------------------------
+# Shared suite libraries  (symlinked in by `dev-env`)
+# -----------------------------------------------------------------------------
+# `dev-env` (setup/projects.yaml) links the shared lib checkouts a repo consumes
+# into `<repo>/libs/` — cloud apps get cloudlib + weblib, web apps get weblib —
+# so dev containers can bind-mount them at /cloudlib and /weblib.
+#
+# One rule for the whole directory, not one per library: a rule per library meant
+# every new shared lib needed a change here, and any repo still on a stale copy
+# of this file silently started tracking the new link. `libs/` is a real
+# directory (the links are inside it), so the trailing slash is correct.
+/libs/
+
+# -----------------------------------------------------------------------------
+# Synced project config  (installed fresh on every `make update`)
+# -----------------------------------------------------------------------------
+# `scripts/common/update-files.sh` re-installs these from the common-files / ai
+# repos on each update, so the synced copy is the source of truth —
+# committing them would only let a stale copy drift. The committed exceptions are
+# this .gitignore and scripts/.gitkeep (which ARE tracked).
+#
+# EXCEPTION — per-project AI files are render-once and PROJECT-OWNED, so they are
+# tracked & committed (NOT synced over): CLAUDE.md, AGENTS.md,
+# .github/copilot-instructions.md, and .claude/project.manifest. `update-ai.sh`
+# renders these once from the `ai` templates and never overwrites them. Everything
+# else under .claude/ (rules, settings.json, agents/commands/hooks, VERSION) stays
+# synced from the `ai` repo and out of version control.
+
+# AI assistant config — from the `ai` repo.
+# Ignore all of .claude/ EXCEPT the per-project manifest (git can't re-include a
+# file whose parent dir is excluded, so glob the children and negate the manifest).
+/.claude/*
+!/.claude/project.manifest
+# Per-developer local Claude overrides (never synced, never committed)
+CLAUDE.local.md
+# NOTE: AGENTS.md and /.github/copilot-instructions.md are intentionally NOT ignored
+# — they are per-project, render-once, and committed (see the EXCEPTION above).
+
+# Dev container — GENERATED by `dev-env`, never synced and never committed.
+#
+# dev-env writes a .devcontainer/ at every hierarchy level and every repo: a small
+# generated compose wrapper plus symlinks into the `devcontainer` repo's template
+# tree. This ignore rule is what makes that safe — it is the single mechanism
+# stopping a level's copy from being committed and drifting away from the template
+# it was rendered from. dev-env refuses to deploy into a repo where this rule is
+# missing rather than create committable content, so keep it.
+/.devcontainer/
+
+# Standard root configs — from the `common-files` repo (add new ones here as they
+# are introduced, so the synced copy stays out of version control)
+/.editorconfig
+/.pre-commit-config.yaml
+/rust-toolchain.toml
+/rustfmt.toml
+/deny.toml
+/biome.json
+/eslint.config.mjs
+/.swiftlint.yml
+/.swift-format
