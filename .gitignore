@@ -1,5 +1,5 @@
 # =============================================================================
-# Global .gitignore — SplendidCube workspace
+# Global .gitignore — HaPaDa workspace
 # -----------------------------------------------------------------------------
 # Source of truth: the `common-files` repo. `dev-env` syncs this file into every
 # project root and refreshes it on each update, so DO NOT edit it inside a
@@ -69,7 +69,7 @@ $RECYCLE.BIN/
 *.orig
 
 # -----------------------------------------------------------------------------
-# Rust  (apps, CLIs, AWS Lambda, models, postgres-engine, core)
+# Rust  (apps, CLIs, AWS Lambda, schema-model, postgres-engine, schema-migration)
 # -----------------------------------------------------------------------------
 target/
 **/*.rs.bk
@@ -78,7 +78,7 @@ target/
 # binaries / Lambdas, which commit their lockfile for reproducible builds.
 
 # -----------------------------------------------------------------------------
-# Node / Bun / Nuxt 4 / Vue 3  (web, weblib, i18n)
+# Node / Bun / Nuxt 4 / Vue 3  (web, web-core, i18n)
 # -----------------------------------------------------------------------------
 node_modules/
 .nuxt/
@@ -180,7 +180,7 @@ tmp/
 # -----------------------------------------------------------------------------
 # Local script cache  (managed by the shared makefile)
 # -----------------------------------------------------------------------------
-# `run-script` (in ~/.splendidcube/makefile.mk) downloads makefile scripts into
+# `run-script` (in ~/.hapada/makefile.mk) downloads makefile scripts into
 # scripts/<technology>/ on demand. The folder is kept (.gitkeep) but everything
 # downloaded into it is transient — never commit it.
 /scripts/*
@@ -190,8 +190,8 @@ tmp/
 # Shared suite libraries  (symlinked in by `dev-env`)
 # -----------------------------------------------------------------------------
 # `dev-env` (setup/projects.yaml) links the shared lib checkouts a repo consumes
-# into `<repo>/libs/` — cloud apps get cloudlib + weblib, web apps get weblib —
-# so dev containers can bind-mount them at /cloudlib and /weblib.
+# into `<repo>/libs/` — cloud apps get cloud-core + web-core, web apps get web-core —
+# so dev containers can bind-mount them at /lib/cloud-core and /lib/web-core.
 #
 # One rule for the whole directory, not one per library: a rule per library meant
 # every new shared lib needed a change here, and any repo still on a stale copy
