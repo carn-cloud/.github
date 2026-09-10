@@ -11,5 +11,3 @@ through a shared identity core.
 - **[Rian](https://rian.carn.cloud)** — A source-code repository platform. Host your code, review changes, and trace the full lineage of every commit in one place.
 - **[Turas](https://turas.carn.cloud)** — Agile planning and issue tracking. Plan work, follow progress, and ship in iterations your whole team can see.
 - **[Ciste](https://ciste.carn.cloud)** — Personal finance and budgeting. Track spending, plan budgets, and keep a clear view of where your money goes.
-
-Every product lives at its own `<name>.carn.cloud` domain and signs in through Ainm.
